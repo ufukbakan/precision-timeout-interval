@@ -24,4 +24,4 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: jpb06/jest-badges-action@v1.8.7
         with:
-          branches: master, main
+          branches: main,master
