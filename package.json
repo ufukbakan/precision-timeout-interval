@@ -1,0 +1,41 @@
+{
+  "name": "precision-timeout-interval",
+  "version": "1.0.0",
+  "description": "High precision timeout and interval methods for javascript",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ufukbakan/precision-timeout-interval.git"
+  },
+  "keywords": [
+    "high",
+    "precision",
+    "timeout",
+    "setTimeout",
+    "interval",
+    "setInterval",
+    "performance",
+    "prevent",
+    "lag",
+    "delay",
+    "anti-lag",
+    "anti-delay"
+  ],
+  "author": "Ufuk BAKAN",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ufukbakan/precision-timeout-interval/issues"
+  },
+  "homepage": "https://github.com/ufukbakan/precision-timeout-interval#readme",
+  "dependencies": {
+    "process-timer": "^1.0.2",
+    "raf": "^3.4.1"
+  },
+  "devDependencies": {
+    "@types/jest": "^27.5.1",
+    "jest": "^28.1.0"
+  }
+}
