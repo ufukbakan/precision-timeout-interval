@@ -21,6 +21,8 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v2
+      - name: Install dependencies
+        run: npm install
       - name: Tests
         run: npm run test:ci
       - name: Generating coverage badges
