@@ -1,0 +1,14 @@
+canvas{
+    width: 100%;
+    height: auto;
+    margin: 0;
+    border: 2px solid #000;
+    box-sizing: border-box;
+}
+#grid{
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
+.title{
+    text-align: center;
+}
