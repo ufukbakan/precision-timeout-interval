@@ -2,7 +2,7 @@ const { prcTimeout, prcInterval } = require(".");
 
 test("Test timeout",
     async () => {
-        let arr = new Int32Array([0]);
+        let arr = new Int32Array(new SharedArrayBuffer(4));
         const ms = 100; // interval ms
         const reasonable_delay = 20; // Reasonable delay in ms
         prcTimeout(ms, () => {
