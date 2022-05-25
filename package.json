@@ -4,7 +4,9 @@
   "description": "High precision timeout and interval methods for javascript",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "test:coverage": "npm test -- --coverage",
+    "test:badges": "npm run test:coverage  && jest-coverage-badges"
   },
   "repository": {
     "type": "git",
@@ -36,6 +38,14 @@
   },
   "devDependencies": {
     "@types/jest": "^27.5.1",
-    "jest": "^28.1.0"
+    "jest": "^28.1.0",
+    "jest-coverage-badges": "^1.0.0"
+  },
+  "jest": {
+    "coverageReporters": [
+      "json-summary",
+      "text",
+      "lcov"
+    ]
   }
 }
