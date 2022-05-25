@@ -17,7 +17,7 @@ npm i precision-timeout-interval
 
 ## Timeout usage
 prcTimeout( delayTimeInMilliseconds , callbackFunction )
-```
+```js
 const { prcTimeout } = require("precision-timeout-interval");
 prcTimeout(delayTime, ()=>console.log("hello world") ) // callback function will be executed only once
 ```
@@ -25,7 +25,7 @@ prcTimeout(delayTime, ()=>console.log("hello world") ) // callback function will
 
 ## Interval usage
 prcInterval( delayTimeInMilliseconds , callbackFunction )
-```
+```js
 const { prcInterval } = require("precision-timeout-interval");
 let intervalController = prcInterval(delayTime, ()=>console.log("hello world") ) // callback function will be executed every delayTime milliseconds
 console.log(intervalController) // { end: false }
