@@ -1,4 +1,12 @@
 # precision-timeout-interval
+![node workflow](https://github.com/ufukbakan/precision-timeout-interval/actions/workflows/node.js.yml/badge.svg)
+![node workflow](https://github.com/ufukbakan/precision-timeout-interval/blob/main/badges/coverage-branches.svg)
+![node workflow](https://github.com/ufukbakan/precision-timeout-interval/blob/main/badges/coverage-functions.svg)
+![node workflow](https://github.com/ufukbakan/precision-timeout-interval/blob/main/badges/coverage-jest%20coverage.svg)
+![node workflow](https://github.com/ufukbakan/precision-timeout-interval/blob/main/badges/coverage-lines.svg)
+![node workflow](https://github.com/ufukbakan/precision-timeout-interval/blob/main/badges/coverage-statements.svg)
+<br />
+
 High precision timeout and interval methods for javascript
 <br />
 
