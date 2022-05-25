@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "test:coverage": "npm test -- --coverage",
-    "test:badges": "npm run test:coverage  && jest-coverage-badges"
+    "test:ci": "jest --ci --coverage"
   },
   "repository": {
     "type": "git",
@@ -38,8 +37,7 @@
   },
   "devDependencies": {
     "@types/jest": "^27.5.1",
-    "jest": "^28.1.0",
-    "jest-coverage-badges": "^1.0.0"
+    "jest": "^28.1.0"
   },
   "jest": {
     "coverageReporters": [
