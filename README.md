@@ -1,16 +1,20 @@
-# precision-timeout-interval
-![node workflow](https://github.com/ufukbakan/precision-timeout-interval/actions/workflows/node.js.yml/badge.svg)
-![node workflow](https://github.com/ufukbakan/precision-timeout-interval/blob/main/badges/coverage-branches.svg)
-![node workflow](https://github.com/ufukbakan/precision-timeout-interval/blob/main/badges/coverage-functions.svg)
-![node workflow](https://github.com/ufukbakan/precision-timeout-interval/blob/main/badges/coverage-jest%20coverage.svg)
-![node workflow](https://github.com/ufukbakan/precision-timeout-interval/blob/main/badges/coverage-lines.svg)
-![node workflow](https://github.com/ufukbakan/precision-timeout-interval/blob/main/badges/coverage-statements.svg)
+<p align="center">
+<h1>precision-timeout-interval</h1>
+<p float="left">
+<img alt="node workflow badge" style="display: inline" src="https://github.com/ufukbakan/precision-timeout-interval/actions/workflows/node.js.yml/badge.svg">
+<img alt="node workflow badge" style="display: inline" src="https://github.com/ufukbakan/precision-timeout-interval/blob/main/badges/coverage-branches.svg">
+<img alt="node workflow badge" style="display: inline" src="https://github.com/ufukbakan/precision-timeout-interval/blob/main/badges/coverage-functions.svg">
+<img alt="node workflow badge" style="display: inline" src="https://github.com/ufukbakan/precision-timeout-interval/blob/main/badges/coverage-jest%20coverage.svg">
+<img alt="node workflow badge" style="display: inline" src="https://github.com/ufukbakan/precision-timeout-interval/blob/main/badges/coverage-lines.svg">
+<img alt="node workflow badge" style="display: inline" src="https://github.com/ufukbakan/precision-timeout-interval/blob/main/badges/coverage-statements.svg">
 <br />
+</p>
+
 
 ![demo preview](https://raw.githubusercontent.com/ufukbakan/precision-timeout-interval/main/demo/demo_preview.gif)
+</p>
 High precision timeout and interval methods for javascript
 <br />
-
 ## Installation
 npm i precision-timeout-interval
 <br />
