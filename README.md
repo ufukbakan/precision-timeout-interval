@@ -1,11 +1,11 @@
 <h1 align="center">precision-timeout-interval</h1>
   <p float="left" align="center">
   <img alt="node workflow badge" style="display: inline" src="https://github.com/ufukbakan/precision-timeout-interval/actions/workflows/node.js.yml/badge.svg">
-  <img alt="node workflow badge" style="display: inline" src="https://github.com/ufukbakan/precision-timeout-interval/blob/main/badges/coverage-branches.svg">
-  <img alt="node workflow badge" style="display: inline" src="https://github.com/ufukbakan/precision-timeout-interval/blob/main/badges/coverage-functions.svg">
-  <img alt="node workflow badge" style="display: inline" src="https://github.com/ufukbakan/precision-timeout-interval/blob/main/badges/coverage-jest%20coverage.svg">
-  <img alt="node workflow badge" style="display: inline" src="https://github.com/ufukbakan/precision-timeout-interval/blob/main/badges/coverage-lines.svg">
-  <img alt="node workflow badge" style="display: inline" src="https://github.com/ufukbakan/precision-timeout-interval/blob/main/badges/coverage-statements.svg">
+  <img alt="node workflow badge" style="display: inline" src="https://raw.githubusercontent.com/ufukbakan/precision-timeout-interval/main/badges/coverage-branches.svg">
+  <img alt="node workflow badge" style="display: inline" src="https://raw.githubusercontent.com/ufukbakan/precision-timeout-interval/main/badges/coverage-functions.svg">
+  <img alt="node workflow badge" style="display: inline" src="https://raw.githubusercontent.com/ufukbakan/precision-timeout-interval/main/badges/coverage-jest%20coverage.svg">
+  <img alt="node workflow badge" style="display: inline" src="https://raw.githubusercontent.com/ufukbakan/precision-timeout-interval/main/badges/coverage-lines.svg">
+  <img alt="node workflow badge" style="display: inline" src="https://raw.githubusercontent.com/ufukbakan/precision-timeout-interval/main/badges/coverage-statements.svg">
   <br />
   </p>
 
