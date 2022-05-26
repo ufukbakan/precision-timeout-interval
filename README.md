@@ -7,7 +7,7 @@
 ![node workflow](https://github.com/ufukbakan/precision-timeout-interval/blob/main/badges/coverage-statements.svg)
 <br />
 
-![demo preview](https://github.com/ufukbakan/precision-timeout-interval/blob/main/demo/demo_preview.gif)
+![demo preview](https://raw.githubusercontent.com/ufukbakan/precision-timeout-interval/main/demo/demo_preview.gif)
 High precision timeout and interval methods for javascript
 <br />
 
