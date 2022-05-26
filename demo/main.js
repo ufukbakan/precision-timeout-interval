@@ -2,30 +2,72 @@
 const { prcInterval } = require("precision-timeout-interval");
 const canvasWidth = 600;
 const canvasHeight = 600;
+const hexadecimalChars = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"];
 
 window.addEventListener("load", ()=>{
     const canvasL = document.getElementById("legacy");
     const canvasM = document.getElementById("modern");
+    const button = document.getElementById("dummy-button");
+    const content = document.getElementById("dummy-content");
     const canvasLContext = canvasL.getContext("2d");
     const canvasMContext = canvasM.getContext("2d");
-    let pointL = {x:0, y:0};
-    let pointM = {x:0, y:0};
-    const FPS = 60;
-    setInterval( ()=> update(canvasLContext, pointL), 1000/FPS );
-    prcInterval( 1000/FPS, ()=>update(canvasMContext, pointM) );
+    let legacyPoints = [];
+    let precisionPoints = [];
+    let colors = [];
+    for(let i = 0; i < canvasHeight; i+=10){
+        legacyPoints.push( {x: 0, y: i} );
+        precisionPoints.push( {x: 0, y: i} );
+        colors.push(randomColor());
+    }
+    const FPS = 144;
+    let dummyPingCounter = 0;
+    button.addEventListener("click", ()=>{
+        content.innerHTML += "\nAn event triggered";
+        console.log(dummyPingCounter);
+    });
+    window.setInterval( ()=> { dummyPingCounter = (dummyPingCounter+1) % 500 }, 250 );
+    
+    legacyPoints.forEach(point => {
+        window.setInterval( ()=> movePoint(point), 1000 / FPS);
+    });
+
+    precisionPoints.forEach(point => {
+        prcInterval( 1000/FPS, ()=> { movePoint(point); } );
+    });
+    
+    window.setInterval( ()=> render(canvasLContext, legacyPoints, colors), 1000/FPS );
+    prcInterval( 1000/FPS, ()=>render(canvasMContext, precisionPoints, colors) );
 });
 
 /**
- * @param {CanvasRenderingContext2D} context 
+ * @param {CanvasRenderingContext2D} context
+ * @param {Array} points
+ * @param {Array} colors
  */
-function update(context, point){
+function render(context, points, colors=undefined){
     context.fillStyle = "#000";
     context.clearRect(0, 0, canvasWidth, canvasHeight);
-    context.fillRect(point.x, point.y, 10, 10);
+    for(let i = 0; i < points.length; i++){
+        if(colors && colors[i]){
+            context.fillStyle = colors[i];
+        }
+        context.fillRect(points[i].x, points[i].y, 10, 10);
+    }
+}
+
+function movePoint(point){
     point.x = (point.x + 10) % canvasWidth;
     if(point.x == 0){
         point.y = (point.y + 10) % canvasHeight;
     }
+}
+
+function randomColor(){
+    let result = "#";
+    for(let i = 0; i < 6; i++){
+        result += hexadecimalChars[ Math.round( Math.random()*hexadecimalChars.length ) ];
+    }
+    return result;
 }
 },{"precision-timeout-interval":3}],2:[function(require,module,exports){
 (function (process){(function (){

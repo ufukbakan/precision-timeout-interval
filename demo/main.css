@@ -9,7 +9,14 @@ canvas{
     display: grid;
     grid-template-columns: 50% 50%;
 }
+.col{
+    text-align: center;
+    width: 80%;
+}
 .title{
     text-align: center;
-    font-size: 5em;
+    font-size: 4vw;
+}
+#dummy-content{
+    white-space: pre-line;
 }
