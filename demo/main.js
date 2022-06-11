@@ -3,14 +3,18 @@ const { prcInterval } = require("precision-timeout-interval");
 const canvasWidth = 600;
 const canvasHeight = 600;
 const hexadecimalChars = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"];
+let rendering = true;
+const FPS = 144;
+let jsInterval, prcController;
+let canvasLContext, canvasMContext;
 
 window.addEventListener("load", ()=>{
     const canvasL = document.getElementById("legacy");
     const canvasM = document.getElementById("modern");
     const button = document.getElementById("dummy-button");
     const content = document.getElementById("dummy-content");
-    const canvasLContext = canvasL.getContext("2d");
-    const canvasMContext = canvasM.getContext("2d");
+    canvasLContext = canvasL.getContext("2d");
+    canvasMContext = canvasM.getContext("2d");
     let legacyPoints = [];
     let precisionPoints = [];
     let colors = [];
@@ -19,12 +23,8 @@ window.addEventListener("load", ()=>{
         precisionPoints.push( {x: 0, y: i} );
         colors.push(randomColor());
     }
-    const FPS = 144;
     let dummyPingCounter = 0;
-    button.addEventListener("click", ()=>{
-        content.innerHTML += "\nAn event triggered";
-        console.log(dummyPingCounter);
-    });
+    button.addEventListener("click", toggleRendering);
     window.setInterval( ()=> { dummyPingCounter = (dummyPingCounter+1) % 500 }, 250 );
     
     legacyPoints.forEach(point => {
@@ -35,8 +35,8 @@ window.addEventListener("load", ()=>{
         prcInterval( 1000/FPS, ()=> { movePoint(point); } );
     });
     
-    window.setInterval( ()=> render(canvasLContext, legacyPoints, colors), 1000/FPS );
-    prcInterval( 1000/FPS, ()=>render(canvasMContext, precisionPoints, colors) );
+    jsInterval = window.setInterval( ()=> render(canvasLContext, legacyPoints, colors), 1000/FPS );
+    prcController = prcInterval( 1000/FPS, ()=>render(canvasMContext, precisionPoints, colors) );
 });
 
 /**
@@ -59,6 +59,18 @@ function movePoint(point){
     point.x = (point.x + 10) % canvasWidth;
     if(point.x == 0){
         point.y = (point.y + 10) % canvasHeight;
+    }
+}
+
+function toggleRendering(){
+    if(rendering){
+        window.clearInterval(jsInterval);
+        prcController.end = true;
+        rendering = false;
+    }else{
+        jsInterval = window.setInterval( ()=> render(canvasLContext, legacyPoints, colors), 1000/FPS );
+        prcController = prcInterval( 1000/FPS, ()=>render(canvasMContext, precisionPoints, colors) );
+        rendering = true;
     }
 }
 
