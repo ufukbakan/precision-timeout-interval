@@ -6,18 +6,17 @@ const hexadecimalChars = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a",
 let rendering = true;
 const FPS = 144;
 let jsInterval, prcController;
-let canvasLContext, canvasMContext;
+let canvasLContext, canvasMContext, colors, legacyPoints, precisionPoints;
 
 window.addEventListener("load", ()=>{
     const canvasL = document.getElementById("legacy");
     const canvasM = document.getElementById("modern");
     const button = document.getElementById("dummy-button");
-    const content = document.getElementById("dummy-content");
     canvasLContext = canvasL.getContext("2d");
     canvasMContext = canvasM.getContext("2d");
-    let legacyPoints = [];
-    let precisionPoints = [];
-    let colors = [];
+    legacyPoints = [];
+    precisionPoints = [];
+    colors = [];
     for(let i = 0; i < canvasHeight; i+=10){
         legacyPoints.push( {x: 0, y: i} );
         precisionPoints.push( {x: 0, y: i} );
