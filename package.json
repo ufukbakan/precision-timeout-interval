@@ -1,6 +1,6 @@
 {
   "name": "precision-timeout-interval",
-  "version": "1.0.4",
+  "version": "2.0.0",
   "description": "High precision timeout and interval methods for javascript",
   "main": "index.js",
   "scripts": {
