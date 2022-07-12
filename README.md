@@ -19,23 +19,53 @@ High precision timeout and interval methods for javascript
 <br />
 
 ## Installation
+```bash
 npm i precision-timeout-interval
-<br />
-<br />
-
-## Timeout usage
-prcTimeout( delayTimeInMilliseconds , callbackFunction )
-```js
-const { prcTimeout } = require("precision-timeout-interval");
-prcTimeout(delayTime, ()=>console.log("hello world") ) // callback function will be executed only once
 ```
 <br />
 
-## Interval usage
-prcInterval( delayTimeInMilliseconds , callbackFunction )
+## Interface
+
+```ts
+// milliseconds = delay time in milliseconds
+function prcTimeout(milliseconds:number, callback:Function) : void;
+function prcInterval(milliseconds:number, callback:Function) : IntervalController;
+type IntervalController = {
+    end: boolean
+}
+```
+<br/>
+
+## ES6 Usage
+
+### Timeout usage
+
+```ts
+import { prcTimeout } from 'precision-timeout-interval';
+prcTimeout(delayTime, ()=> console.log("hello world") )
+```
+
+### Interval usage
+```ts
+import { prcInterval } from 'precision-timeout-interval';
+let intervalController = prcInterval(delayTime, ()=> console.log("hello world") )
+console.log(intervalController) // { end: false }
+intervalController.end = true // stops the interval permanently
+```
+<br/>
+
+## CommonJS Usage
+
+### Timeout usage
+```js
+const { prcTimeout } = require("precision-timeout-interval");
+prcTimeout(delayTime, ()=> console.log("hello world") )
+```
+
+### Interval usage
 ```js
 const { prcInterval } = require("precision-timeout-interval");
-let intervalController = prcInterval(delayTime, ()=>console.log("hello world") ) // callback function will be executed every delayTime milliseconds
+let intervalController = prcInterval(delayTime, ()=> console.log("hello world") )
 console.log(intervalController) // { end: false }
 intervalController.end = true // stops the interval permanently
 ```
