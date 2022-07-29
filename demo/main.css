@@ -7,16 +7,50 @@ canvas{
 }
 #grid{
     display: grid;
-    grid-template-columns: 50% 50%;
+    grid-template-columns: 33% 33% 33%;
+    margin-bottom: 1em;
 }
 .col{
+    position: relative;
     text-align: center;
     width: 80%;
 }
 .title{
     text-align: center;
-    font-size: 4vw;
+    font-size: 2em;
+    line-height: 1em;
+    height: 3em;
 }
 #dummy-content{
     white-space: pre-line;
+}
+
+.controls{
+    width: 100%;
+    text-align: center;
+}
+
+@media screen and (orientation: portrait) {
+    #grid{
+        grid-template-columns: unset;
+        grid-template-rows: 33% 33% 33%;
+        height: 80vh;
+        overflow: hidden;
+    }
+    .col{
+        display: flex;
+        align-items: center;
+        width: 100%;
+    }
+    .col .title{
+        font-size: 1em;
+        order: 2;
+        width: 30%;
+    }
+    canvas{
+        width: 70%;
+        height: 100%;
+        object-fit: contain;
+        background-color: #000;
+    }
 }

@@ -8,13 +8,23 @@ const requestAnimationFrame = require("raf");
 function prcTimeout(milliseconds, callback){
     const timer = new ProcessTimer();
     const executeAfter = timer.msec + milliseconds;
-    requestAnimationFrame(tick.bind(timer, executeAfter, callback));
+    requestAnimationFrame(tick.bind(timer, executeAfter, callback, false));
 }
 
+/**
+ * @param {Number} milliseconds Delay time in milliseconds
+ * @param {Function} callback Function which will be executed after delay time
+ */
+ function prcTimeoutWithDelta(milliseconds, callback){
+    const timer = new ProcessTimer();
+    const executeAfter = timer.msec + milliseconds;
+    requestAnimationFrame(tick.bind(timer, executeAfter, callback, true));
+}
 
 /**
  * @typedef {Object} IntervalConfiguration
  * @property {boolean} end Tells interval to execute callback at next tick. If once set to false, interval will be permanently deleted.
+ * @property {Function} callback Only getter for callback function of interval.
  */
 
 /**
@@ -25,7 +35,8 @@ function prcTimeout(milliseconds, callback){
  */
 function prcInterval(milliseconds, callback){
     let config = {
-        end: false
+        end: false,
+        callback: callback
     };
     const configuredCallback = (cfg) => {
         callback();
@@ -38,15 +49,40 @@ function prcInterval(milliseconds, callback){
 }
 
 /**
- * @param {*} executeAfter Delay Time
- * @param {*} callback Callback Function
+ * 
+ * @param {Number} milliseconds Delay time in milliseconds
+ * @param {Function} callback Function which will be executed after delay time
+ * @returns {IntervalConfiguration}
  */
-function tick(executeAfter, callback){
+ function prcIntervalWithDelta(milliseconds, callback){
+    let config = {
+        end: false,
+        callback: callback
+    };
+    
+    const configuredCallback = (cfg, deltaT) => {
+        callback(deltaT);
+        if(!cfg.end){
+            prcTimeoutWithDelta(milliseconds, configuredCallback.bind(null, cfg));
+        }
+    }
+    prcTimeoutWithDelta(milliseconds, configuredCallback.bind(null, config));
+    return config;
+}
+
+/**
+ * @param {Number} executeAfter Delay Time
+ * @param {Function} callback Callback Function
+ * @param {Boolean} bindDeltaT Bind delta time to callback function
+ */
+function tick(executeAfter, callback, bindDeltaT){
     if(this.msec < executeAfter){
-        requestAnimationFrame(tick.bind(this, executeAfter, callback));
+        requestAnimationFrame(tick.bind(this, executeAfter, callback, bindDeltaT));
+    }else if(bindDeltaT){
+        callback(this.msec);
     }else{
         callback();
     }
 }
 
-module.exports = { prcTimeout, prcInterval };
+module.exports = { prcTimeout, prcTimeoutWithDelta, prcInterval, prcIntervalWithDelta };
