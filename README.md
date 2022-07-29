@@ -29,28 +29,58 @@ npm i precision-timeout-interval
 ```ts
 // milliseconds = delay time in milliseconds
 function prcTimeout(milliseconds:number, callback:Function) : void;
+
+function prcTimeoutWithDelta(milliseconds:number, callback:Function) : void;
+
 function prcInterval(milliseconds:number, callback:Function) : IntervalController;
+
+function prcIntervalWithDelta(milliseconds:number, callback:Function) : IntervalController;
+
 type IntervalController = {
-    end: boolean
+    end: boolean,
+    interval: number, // Getter only
+    callback: Function // Getter only
 }
 ```
 <br/>
 
-## ES6 Usage
+## ES6 Usage Examples
 
 ### Timeout usage
 
 ```ts
 import { prcTimeout } from 'precision-timeout-interval';
-prcTimeout(delayTime, ()=> console.log("hello world") )
+
+prcTimeout(50, ()=> console.log("hello world") );
+// logs hello world after 50 milliseconds
+```
+
+```ts
+import { prcTimeoutWithDelta } from 'precision-timeout-interval';
+
+prcTimeoutWithDelta(50, (deltaT) =>{
+  console.log("Hello, after "+ deltaT +" msecs");
+});
 ```
 
 ### Interval usage
 ```ts
 import { prcInterval } from 'precision-timeout-interval';
-let intervalController = prcInterval(delayTime, ()=> console.log("hello world") )
-console.log(intervalController) // { end: false }
+
+let intervalController = prcInterval(50, ()=> console.log("hello world") );
+
 intervalController.end = true // stops the interval permanently
+
+// Shorthand to restart an interval:
+intervalController = prcInterval(intervalController.interval,intervalController.callback);
+```
+```ts
+import { prcIntervalWithDelta } from 'precision-timeout-interval';
+
+const FPS = 60;
+let intervalController = prcIntervalWithDelta(1000/FPS, (deltaT)=>{
+  fallMeters(2 * deltaT/100); // FPS independent physics
+});
 ```
 <br/>
 
@@ -59,13 +89,36 @@ intervalController.end = true // stops the interval permanently
 ### Timeout usage
 ```js
 const { prcTimeout } = require("precision-timeout-interval");
-prcTimeout(delayTime, ()=> console.log("hello world") )
+
+prcTimeout(50, ()=> console.log("hello world") );
+// logs hello world after 50 milliseconds
+```
+
+```js
+const { prcTimeoutWithDelta } = require("precision-timeout-interval");
+
+prcTimeoutWithDelta(50, (deltaT) =>{
+  console.log("Hello, after "+ deltaT +" msecs");
+});
 ```
 
 ### Interval usage
 ```js
 const { prcInterval } = require("precision-timeout-interval");
-let intervalController = prcInterval(delayTime, ()=> console.log("hello world") )
-console.log(intervalController) // { end: false }
+
+let intervalController = prcInterval(50, ()=> console.log("hello world") );
+
 intervalController.end = true // stops the interval permanently
+
+// Shorthand to restart an interval:
+intervalController = prcInterval(intervalController.interval,intervalController.callback);
+```
+
+```js
+const { prcIntervalWithDelta } = require("precision-timeout-interval");
+
+const FPS = 60;
+let intervalController = prcIntervalWithDelta(1000/FPS, (deltaT)=>{
+  fallMeters(2 * deltaT/100); // FPS independent physics
+});
 ```

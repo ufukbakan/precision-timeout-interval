@@ -36,6 +36,7 @@ function prcTimeout(milliseconds, callback){
 function prcInterval(milliseconds, callback){
     let config = {
         end: false,
+        interval: milliseconds,
         callback: callback
     };
     const configuredCallback = (cfg) => {
@@ -57,6 +58,7 @@ function prcInterval(milliseconds, callback){
  function prcIntervalWithDelta(milliseconds, callback){
     let config = {
         end: false,
+        interval: milliseconds,
         callback: callback
     };
     
