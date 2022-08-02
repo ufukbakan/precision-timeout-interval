@@ -84,3 +84,13 @@ test("Test interval with delta",
         await new Promise((r) => setTimeout(r, 200));
     }
 );
+
+test("Immediately end interval without tick", async ()=>{
+    let x = 0;
+    let intervalController = prcInterval(1000, ()=>x++);
+    intervalController.end = true;
+    intervalController = prcIntervalWithDelta(1000, ()=>x++);
+    intervalController.end = true;
+    await new Promise((r) => setTimeout(r, 2000));
+    expect(x).toBe(0);
+});
