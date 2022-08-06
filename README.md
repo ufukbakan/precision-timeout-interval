@@ -20,7 +20,7 @@ High precision timeout and interval methods for javascript
 
 ## Installation
 ```bash
-npm i precision-timeout-interval
+npm i precision-timeout-interval@latest
 ```
 <br />
 
