@@ -1,8 +1,15 @@
-declare function prcTimeout(milliseconds:number, callback: Function) : void;
-declare function prcTimeoutWithDelta(milliseconds:number, callback: Function) : void;
+type TimeoutController = {
+    cancel(): void
+}
+
+declare function prcTimeout(milliseconds:number, callback: Function) : TimeoutController;
+declare function prcTimeoutWithDelta(milliseconds:number, callback: Function) : TimeoutController;
+
 type IntervalController = {
-    end: boolean,
-    interval: number,
+    cancel(): void,
+    restart(): void,
+    setPeriod(milliseconds:number): void,
+    pauseResume(): void,
     callback: Function
 }
 declare function prcInterval(milliseconds:number, callback:Function) : IntervalController;

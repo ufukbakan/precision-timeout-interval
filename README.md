@@ -12,113 +12,40 @@
   <p float="left" align="center">
     <img alt="demo preview" src="https://raw.githubusercontent.com/ufukbakan/precision-timeout-interval/main/demo/demo_preview.gif">
   </p>
-High precision timeout and interval methods for javascript
-<br/>
-
-[Click here for live demo](https://ufukbakan.github.io/precision-timeout-interval/demo/)
+<center>
+  <h2><a href="https://ufukbakan.github.io/precision-timeout-interval/demo/">Click here for live demo</a></h2>
+  <h2>V4 Brings the most developer friendly timing methods </h2>
+</center>
 <br />
 
 ## Installation
 ```bash
 npm i precision-timeout-interval@latest
 ```
-<br />
 
-## Interface
-
-```ts
-// milliseconds = delay time in milliseconds
-function prcTimeout(milliseconds:number, callback:Function) : void;
-
-function prcTimeoutWithDelta(milliseconds:number, callback:Function) : void;
-
-function prcInterval(milliseconds:number, callback:Function) : IntervalController;
-
-function prcIntervalWithDelta(milliseconds:number, callback:Function) : IntervalController;
-
-type IntervalController = {
-    end: boolean,
-    interval: number, // Getter only
-    callback: Function // Getter only
-}
-```
-<br/>
-
-## ES6 Usage Examples
-
-### Timeout usage
-
-```ts
-import { prcTimeout } from 'precision-timeout-interval';
-
-prcTimeout(50, ()=> console.log("hello world") );
-// logs hello world after 50 milliseconds
-```
-
-```ts
-import { prcTimeoutWithDelta } from 'precision-timeout-interval';
-
-prcTimeoutWithDelta(50, (deltaT) =>{
-  console.log("Hello, after "+ deltaT +" msecs");
-});
-```
-
-### Interval usage
-```ts
-import { prcInterval } from 'precision-timeout-interval';
-
-let intervalController = prcInterval(50, ()=> console.log("hello world") );
-
-intervalController.end = true // stops the interval permanently
-
-// Shorthand to restart an interval:
-intervalController = prcInterval(intervalController.interval,intervalController.callback);
-```
-```ts
-import { prcIntervalWithDelta } from 'precision-timeout-interval';
-
-const FPS = 60;
-let intervalController = prcIntervalWithDelta(1000/FPS, (deltaT)=>{
-  fallMeters(2 * deltaT/100); // FPS independent physics
-});
-```
-<br/>
-
-## CommonJS Usage
-
-### Timeout usage
+## Importing
 ```js
-const { prcTimeout } = require("precision-timeout-interval");
-
-prcTimeout(50, ()=> console.log("hello world") );
-// logs hello world after 50 milliseconds
+  // ES6:
+  import { prcTimeout, prcInterval } from 'precision-timeout-interval';
+  // CommonJS: 
+  const { prcTimeout, prcInterval } = require('precision-timeout-interval');
 ```
+<br>
+<h1 align="center">Introducing Awesome V4 Features</h1>
 
-```js
-const { prcTimeoutWithDelta } = require("precision-timeout-interval");
-
-prcTimeoutWithDelta(50, (deltaT) =>{
-  console.log("Hello, after "+ deltaT +" msecs");
-});
+- ## Timeouts are now cancellable:
+```ts
+let myTimeout = prcTimeout(500, () => console.log("I'm gona be cancelled") );
+myTimeout.cancel()
 ```
-
-### Interval usage
-```js
-const { prcInterval } = require("precision-timeout-interval");
-
-let intervalController = prcInterval(50, ()=> console.log("hello world") );
-
-intervalController.end = true // stops the interval permanently
-
-// Shorthand to restart an interval:
-intervalController = prcInterval(intervalController.interval,intervalController.callback);
-```
-
-```js
-const { prcIntervalWithDelta } = require("precision-timeout-interval");
-
-const FPS = 60;
-let intervalController = prcIntervalWithDelta(1000/FPS, (deltaT)=>{
-  fallMeters(2 * deltaT/100); // FPS independent physics
-});
+- ### And of course intervals are too
+- # Interval controller is completely changed
+- ## Meet with new interval controller methods: cancel, restart, pauseResume and setPeriod
+```ts
+let myInterval = prcInterval(100, () => console.log("Hello V4") ); // start
+myInterval.pauseResume(); // pause
+myInterval.pauseResume(); // resume
+myInterval.restart(); // restart counter
+myInterval.setPeriod(1000); // set a new period and restart
+myInterval.cancel() // stop
 ```
