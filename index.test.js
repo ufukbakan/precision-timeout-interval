@@ -64,6 +64,7 @@ test("Test interval",
         const reasonable_delay = 35; // Reasonable delay in ms
         const increase = () => Atomics.add(arr, 0, 1);
         let intervalConfig = prcInterval(ms, increase);
+        expect(intervalConfig.getPeriod()).toBe(ms);
 
         for (let i = 0; i < 5; i++) {
             const startTime = Date.now();
@@ -90,6 +91,7 @@ test("Test interval with delta",
         const reasonable_delay = 35; // Reasonable delay in ms
         const increase = () => Atomics.add(arr, 0, 1);
         let intervalConfig = prcIntervalWithDelta(ms, increase);
+        expect(intervalConfig.getPeriod()).toBe(ms);
 
         for (let i = 0; i < 5; i++) {
             const startTime = Date.now();

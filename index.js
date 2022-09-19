@@ -58,7 +58,7 @@ class IntervalController{
      * @param {IntervalConfiguration} config 
      * @param {boolean} hasDelta
      */
-    constructor(config, hasDelta=false){
+    constructor(config, hasDelta){
         this.config = config;
         this.callback = config.callback;
         this.hasDelta = hasDelta;
@@ -90,6 +90,10 @@ class IntervalController{
     setPeriod(milliseconds){
         this.config.interval = milliseconds;
         this.restart();
+    }
+
+    getPeriod(){
+        return this.config.interval;
     }
 
 }
@@ -144,7 +148,7 @@ function prcInterval(milliseconds, callback){
  * @param {Function} callback Callback Function
  * @param {Boolean} bindDeltaT Bind delta time to callback function
  */
-function tick(executeAfter, callback, bindDeltaT, config=undefined){
+function tick(executeAfter, callback, bindDeltaT, config){
     if(this.msec < executeAfter && (!config || !config.cancelled)){
         requestAnimationFrame(tick.bind(this, executeAfter, callback, bindDeltaT, config));
     }else if((!config || !config.cancelled) && bindDeltaT){
@@ -154,4 +158,4 @@ function tick(executeAfter, callback, bindDeltaT, config=undefined){
     }
 }
 
-module.exports = { prcTimeout, prcTimeoutWithDelta, prcInterval, prcIntervalWithDelta };
+module.exports = { prcTimeout, prcTimeoutWithDelta, prcInterval, prcIntervalWithDelta, IntervalController, TimeoutController };
