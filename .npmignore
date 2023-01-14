@@ -1,4 +1,5 @@
 .github
 badges
-demo
+demo/
+demo.js
 coverage

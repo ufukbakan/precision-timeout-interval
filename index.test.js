@@ -131,6 +131,7 @@ test("Restart interval just before executing", async ()=>{
     expect(x).toBe(2);
     intervalController.cancel();
     intervalController2.cancel();
+    await new Promise((r) => setTimeout(r, 200));
 });
 
 test("Flex period intervals", async()=>{
@@ -145,6 +146,7 @@ test("Flex period intervals", async()=>{
     expect(x).toBe(4);
     intervalController.cancel();
     intervalController2.cancel();
+    await new Promise((r) => setTimeout(r, 200));
 });
 
 test("Pause/resume intervals", async ()=>{
@@ -160,9 +162,10 @@ test("Pause/resume intervals", async ()=>{
     intervalController.pauseResume();
     intervalController2.pauseResume();
     
-    await new Promise((r) => setTimeout(r, 140));
+    await new Promise((r) => setTimeout(r, 120));
     expect(x).toBe(4);
 
     intervalController.cancel();
     intervalController2.cancel();
+    await new Promise((r) => setTimeout(r, 200));
 });
