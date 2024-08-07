@@ -4,7 +4,6 @@ const now = require("performance-now");
 /**
  * @typedef {Object} TimeoutConfiguration
  * @property {boolean} cancelled
- * @property 
  */
 
 class TimeoutController {
