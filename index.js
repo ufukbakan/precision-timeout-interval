@@ -7,15 +7,16 @@ const now = require("performance-now");
  */
 
 class TimeoutController {
-    /**
-     * @param {TimeoutConfiguration} config 
-     */
-    constructor(config) {
-        this.config = config;
-    }
-    cancel() {
-        this.config.cancelled = true;
-    }
+  /**
+   * @param {TimeoutConfiguration} config
+   */
+  constructor(config) {
+    this.config = config;
+    this.callback = config.callback;
+  }
+  cancel() {
+    this.config.cancelled = true;
+  }
 }
 
 /**
@@ -25,10 +26,16 @@ class TimeoutController {
  * @param {IntervalConfiguration | TimeoutConfiguration} config Don't set this parameter manually
  * @return {TimeoutController}
  */
-function prcTimeout(milliseconds, callback, config = { cancelled: false }) {
-    const executeAfter = now() + milliseconds;
-    requestAnimationFrame((ts) => tick(ts, executeAfter, callback, false, config));
-    return new TimeoutController(config);
+function prcTimeout(
+  milliseconds,
+  callback,
+  config = { cancelled: false, callback }
+) {
+  const executeAfter = now() + milliseconds;
+  requestAnimationFrame((ts) =>
+    tick(ts, executeAfter, callback, false, config)
+  );
+  return new TimeoutController(config);
 }
 
 /**
@@ -38,10 +45,14 @@ function prcTimeout(milliseconds, callback, config = { cancelled: false }) {
  * @param {IntervalConfiguration} config Don't set this parameter manually
  * @return {TimeoutController}
  */
-function prcTimeoutWithDelta(milliseconds, callback, config = { cancelled: false, lastCallTimestamp: 0 }) {
-    const executeAfter = now() + milliseconds;
-    requestAnimationFrame(ts => tick(ts, executeAfter, callback, true, config));
-    return new TimeoutController(config);
+function prcTimeoutWithDelta(
+  milliseconds,
+  callback,
+  config = { cancelled: false, lastCallTimestamp: 0, callback }
+) {
+  const executeAfter = now() + milliseconds;
+  requestAnimationFrame((ts) => tick(ts, executeAfter, callback, true, config));
+  return new TimeoutController(config);
 }
 
 /**
@@ -53,90 +64,95 @@ function prcTimeoutWithDelta(milliseconds, callback, config = { cancelled: false
  */
 
 class IntervalController {
-    /**
-     * @param {IntervalConfiguration} config 
-     * @param {boolean} hasDelta
-     */
-    constructor(config, hasDelta) {
-        this.config = config;
-        this.callback = config.callback;
-        this.hasDelta = hasDelta;
-    }
+  /**
+   * @param {IntervalConfiguration} config
+   * @param {boolean} hasDelta
+   */
+  constructor(config, hasDelta) {
+    this.config = config;
+    this.callback = config.callback;
+    this.hasDelta = hasDelta;
+  }
 
-    restart() {
-        this.config.cancelled = true;
-        if (this.hasDelta) {
-            const newInterval = prcIntervalWithDelta(this.config.interval, this.config.callback);
-            this.config = newInterval.config;
-        } else {
-            const newInterval = prcInterval(this.config.interval, this.config.callback);
-            this.config = newInterval.config;
-        }
+  restart() {
+    this.config.cancelled = true;
+    if (this.hasDelta) {
+      const newInterval = prcIntervalWithDelta(
+        this.config.interval,
+        this.config.callback
+      );
+      this.config = newInterval.config;
+    } else {
+      const newInterval = prcInterval(
+        this.config.interval,
+        this.config.callback
+      );
+      this.config = newInterval.config;
     }
+  }
 
-    cancel() {
-        this.config.cancelled = true;
+  cancel() {
+    this.config.cancelled = true;
+  }
+
+  pauseResume() {
+    if (this.config.cancelled) {
+      this.restart();
+    } else {
+      this.config.cancelled = true;
     }
+  }
 
-    pauseResume() {
-        if (this.config.cancelled) {
-            this.restart();
-        } else {
-            this.config.cancelled = true;
-        }
-    }
+  setPeriod(milliseconds) {
+    this.config.interval = milliseconds;
+    this.restart();
+  }
 
-    setPeriod(milliseconds) {
-        this.config.interval = milliseconds;
-        this.restart();
-    }
-
-    getPeriod() {
-        return this.config.interval;
-    }
-
+  getPeriod() {
+    return this.config.interval;
+  }
 }
 
 /**
- * 
+ *
  * @param {Number} milliseconds Delay time in milliseconds
  * @param {Function} callback Function which will be executed after delay time
  * @returns {IntervalController}
  */
 function prcInterval(milliseconds, callback) {
-    /** @type {IntervalConfiguration} */ let config = {
-        cancelled: false,
-        interval: milliseconds,
-        callback: callback,
-    };
-    const configuredCallback = () => {
-        callback();
-        prcTimeout(milliseconds, configuredCallback, config);
-    }
+  /** @type {IntervalConfiguration} */ let config = {
+    cancelled: false,
+    interval: milliseconds,
+    callback: callback,
+  };
+  const configuredCallback = () => {
+    callback();
     prcTimeout(milliseconds, configuredCallback, config);
-    return new IntervalController(config, false);
+  };
+  prcTimeout(milliseconds, configuredCallback, config);
+  return new IntervalController(config, false);
 }
 
 /**
- * 
+ *
  * @param {Number} milliseconds Delay time in milliseconds
  * @param {Function} callback Function which will be executed after delay time
  * @returns {IntervalConfiguration}
  */
 function prcIntervalWithDelta(milliseconds, callback) {
-    /** @type {IntervalConfiguration} */ let config = {
-        cancelled: false,
-        interval: milliseconds,
-        callback: callback,
-        lastCallTimestamp: 0
-    };
+  /** @type {IntervalConfiguration} */ let config = {
+    cancelled: false,
+    interval: milliseconds,
+    callback: callback,
+    lastCallTimestamp: 0,
+  };
 
-    const configuredCallback = (deltaT) => {
-        callback(deltaT);
-        prcTimeoutWithDelta(milliseconds, configuredCallback, config);
-    }
+  const configuredCallback = (deltaT) => {
+    callback(deltaT);
     prcTimeoutWithDelta(milliseconds, configuredCallback, config);
-    return new IntervalController(config, true);
+  };
+  prcTimeoutWithDelta(milliseconds, configuredCallback, config);
+  return new IntervalController(config, true);
 }
 
 /**
@@ -147,14 +163,23 @@ function prcIntervalWithDelta(milliseconds, callback) {
  * @param {TimeoutConfiguration | IntervalConfiguration} config Interval or Timeout config
  */
 function tick(timestamp, executeAfter, callback, bindDeltaT, config) {
-    if (timestamp < executeAfter && !config.cancelled) {
-        requestAnimationFrame((ts) => tick(ts, executeAfter, callback, bindDeltaT, config));
-    } else if (!config.cancelled && bindDeltaT) {
-        callback(timestamp - config.lastCallTimestamp);
-        config.lastCallTimestamp = timestamp;
-    } else if (!config.cancelled) {
-        callback();
-    }
+  if (timestamp < executeAfter && !config.cancelled) {
+    requestAnimationFrame((ts) =>
+      tick(ts, executeAfter, callback, bindDeltaT, config)
+    );
+  } else if (!config.cancelled && bindDeltaT) {
+    callback(timestamp - config.lastCallTimestamp);
+    config.lastCallTimestamp = timestamp;
+  } else if (!config.cancelled) {
+    callback();
+  }
 }
 
-module.exports = { prcTimeout, prcTimeoutWithDelta, prcInterval, prcIntervalWithDelta, IntervalController, TimeoutController };
+module.exports = {
+  prcTimeout,
+  prcTimeoutWithDelta,
+  prcInterval,
+  prcIntervalWithDelta,
+  IntervalController,
+  TimeoutController,
+};
